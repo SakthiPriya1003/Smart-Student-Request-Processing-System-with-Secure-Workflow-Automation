@@ -23,6 +23,7 @@
 //module.exports = router;
 
 
+// server/routes/tutorRoutes.js
 const express = require("express");
 const router = express.Router();
 
@@ -31,10 +32,14 @@ const authorize = require("../middleware/roleMiddleware");
 
 const {
   getTutorRequests,
-  tutorDecision
+  tutorDecision,
+  getAllTutors
 } = require("../controllers/tutorController");
 
-// View tutor requests
+// Get all tutors (public - needed for registration dropdown)
+router.get("/", getAllTutors);
+
+// Tutor request routes (PROTECTED)
 router.get(
   "/requests",
   protect,
@@ -42,7 +47,6 @@ router.get(
   getTutorRequests
 );
 
-// Approve or reject
 router.put(
   "/requests/:id",
   protect,
